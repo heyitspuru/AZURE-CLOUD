@@ -27,4 +27,11 @@ This repo serves as a collection of practical labs, implementations, and applied
 
 ---
 
-## 📂 Repo Structure (Work in Progress)
+## 📂 Repo Structure
+
+```
+labs/
+├── LAB-01.md    # Introduction to Azure Fundamentals
+├── LAB-02.md    # Azure Virtual Machines
+└── LAB-03.md    # Azure Storage Solutions
+```
