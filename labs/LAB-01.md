@@ -57,29 +57,29 @@ Confirmed IIS custom page displayed
 
 ### 2. Ubuntu Server with Apache
 ### 2.1 Created a VM with:
-Name: Ubuntu-Lab1
-Image: Ubuntu 22.04 LTS
-Size: Standard_B1s
-Authentication: SSH Key or Password
-Inbound Ports: SSH (22), HTTP (80)
+  - **Name**: Ubuntu-Lab1
+  - **Image**: Ubuntu 22.04 LTS
+  - **Size**: Standard_B1s
+  - **Authentication**: SSH Key or Password
+  - **Inbound Ports**: SSH (22), HTTP (80)
 
 ScreenShot-<img width="1919" height="901" alt="Screenshot 2025-09-24 020936" src="https://github.com/user-attachments/assets/fd4e0b78-2615-497a-8934-6cad5f7e90c1" />
 
 ### 2.2 Connected via SSH:
-ssh azureuser@<Public-IP>
+  - ssh azureuser@<Public-IP>
 
 ### 2.3 Installed Apache:
-sudo apt update
-sudo apt install apache2 -y
+  - sudo apt update
+  - sudo apt install apache2 -y
 
 Screenshot-<img width="1382" height="919" alt="Screenshot 2025-09-24 022322" src="https://github.com/user-attachments/assets/ad49ff5b-8629-43e0-8ad3-899da6582a44" />
 
 ### 2.4 Created custom site directory and index file:
 Screenshot - default site- <img width="1919" height="1019" alt="Screenshot 2025-09-24 022343" src="https://github.com/user-attachments/assets/1a1e5cf2-c3ba-43c9-9ded-bd74bdb933e5" /> 
 
-sudo mkdir /var/www/gci
-cd /var/www/gci
-sudo nano index.html
+  - sudo mkdir /var/www/gci
+  - cd /var/www/gci
+  - sudo nano index.html
 
 Example content:
 <h1>Ubuntu Rocks! 🚀</h1>
@@ -88,17 +88,17 @@ Example content:
 Screenshot- Updated- <img width="1919" height="858" alt="Screenshot 2025-09-24 023012" src="https://github.com/user-attachments/assets/3fb6c605-757b-4fa2-917f-2248dce2296d" />
 
 ### 2.5 Configured VirtualHost:
-sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/gci.conf
-sudo nano /etc/apache2/sites-available/gci.conf
+  - sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/gci.conf
+  - sudo nano /etc/apache2/sites-available/gci.conf
 
 ### 2.6 Key config changes:
-DocumentRoot /var/www/gci
-ServerName gci.example.com
+  - DocumentRoot /var/www/gci
+  - ServerName gci.example.com
 
 ### 2.7 Disabled default site & enabled custom site:
-sudo a2dissite 000-default.conf
-sudo a2ensite gci.conf
-sudo systemctl reload apache2
+  - sudo a2dissite 000-default.conf
+  - sudo a2ensite gci.conf
+  - sudo systemctl reload apache2
 
 Verified in browser → http://<Public-IP> → Custom page displayed
 
