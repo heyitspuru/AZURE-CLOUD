@@ -16,7 +16,7 @@ In this step, we set up a **Windows Server 2022 VM (`xyz-server`)** with IIS, cu
 - Basic knowledge of Windows Server administration
 
 ### Lab Steps
-### 1 VM with Windows Server
+### Step 1 VM with Windows Server
 ### 1.1 Create Virtual Machine
 1. Logged into [Azure Portal](https://portal.azure.com)  
 2. Navigated to **Virtual Machines → + Create**  
@@ -55,7 +55,7 @@ Opened browser → http://<Public-IP>
 Confirmed IIS custom page displayed
 
 
-### 2. Ubuntu Server with Apache
+### Step 2. Ubuntu Server with Apache
 ### 2.1 Created a VM with:
   - **Name**: Ubuntu-Lab1
   - **Image**: Ubuntu 22.04 LTS
@@ -101,6 +101,47 @@ Screenshot- Updated- <img width="1919" height="858" alt="Screenshot 2025-09-24 0
   - sudo systemctl reload apache2
 
 Verified in browser → http://<Public-IP> → Custom page displayed
+
+
+
+### Step 3 Create VM Images (Snapshots)
+
+#### 🔹 Procedure
+1. Navigated to **Azure Portal → Virtual Machines**  
+2. Selected each VM (`Wmserver-Lab1` and `Ubuntu-Lab1`)  
+3. From the top menu, clicked **Capture**  
+4. Entered image names:  
+   - `WinServerLab01-Image`  
+   - `UbuntuLab01-Image`  
+5. Saved images to the chosen resource group for future redeployment  
+
+---
+
+#### 📷 Screenshots
+- ![Windows VM Image Created](<img width="1915" height="801" alt="Screenshot 2025-09-27 010954" src="https://github.com/user-attachments/assets/4fd6faa6-e7bb-4414-8b9d-522100ec2d59" />
+)  
+- ![Ubuntu VM Image Created](<img width="1897" height="873" alt="Screenshot 2025-09-27 011422" src="https://github.com/user-attachments/assets/6aa9e6d2-87b6-4265-8a6b-253812ba0057" />
+)  
+
+---
+
+### Step 4 — Delete Original VMs
+
+#### 🔹 Procedure
+1. After creating images, went back to **Azure Portal → Virtual Machines**  
+2. Selected both:  
+   - `Wmserver-Lab1`  
+   - `Ubuntu-Lab1`  
+3. Chose **Delete** to remove the original instances  
+4. Confirmed deletion → Ensured that images remained safe in the resource group  
+
+---
+
+#### 📷 Screenshots
+- ![Windows VM Deleted] & [Ubuntu VM Deleted]
+- <img width="1893" height="871" alt="Screenshot 2025-09-27 012320" src="https://github.com/user-attachments/assets/eca86e33-5447-4d02-b33a-dcf001679f48" />
+
+
 
 
 
