@@ -118,10 +118,11 @@ Verified in browser → http://<Public-IP> → Custom page displayed
 ---
 
 #### 📷 Screenshots
-- ![Windows VM Image Created](<img width="1915" height="801" alt="Screenshot 2025-09-27 010954" src="https://github.com/user-attachments/assets/4fd6faa6-e7bb-4414-8b9d-522100ec2d59" />
-)  
-- ![Ubuntu VM Image Created](<img width="1897" height="873" alt="Screenshot 2025-09-27 011422" src="https://github.com/user-attachments/assets/6aa9e6d2-87b6-4265-8a6b-253812ba0057" />
-)  
+
+1)Windows Server-
+-<img width="1897" height="873" alt="Screenshot 2025-09-27 011422" src="https://github.com/user-attachments/assets/5e97914b-ec4f-47de-acd1-22977eb7a5fa" />
+2)Ubuntu Server-
+-<img width="1915" height="801" alt="Screenshot 2025-09-27 010954" src="https://github.com/user-attachments/assets/66a0e3a2-68c8-4400-8d7e-35d5bd82c1ab" />
 
 ---
 
