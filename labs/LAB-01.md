@@ -142,6 +142,45 @@ Verified in browser → http://<Public-IP> → Custom page displayed
 - ![Windows VM Deleted] & [Ubuntu VM Deleted]
 - <img width="1893" height="871" alt="Screenshot 2025-09-27 012320" src="https://github.com/user-attachments/assets/eca86e33-5447-4d02-b33a-dcf001679f48" />
 
+---
+### Step 5 Recreate VMs from Images
+
+1. Successfully recreated Ubuntu VM from UbuntuLab01-Image → Apache configuration persisted
+   Screenshot- <img width="1736" height="823" alt="Screenshot 2025-09-27 104734" src="https://github.com/user-attachments/assets/96ea901c-f8f4-4375-a7d1-cef6d410af5a" />
+
+2. Tested the new Restored VM with same config
+   Screenshot(a)-<img width="912" height="621" alt="Screenshot 2025-09-27 111028" src="https://github.com/user-attachments/assets/c4c760f0-aa4b-427e-88c1-5238315ed018" />
+
+   Screenshot(b)-<img width="1310" height="462" alt="Screenshot 2025-09-27 112236" src="https://github.com/user-attachments/assets/35417630-b901-4c87-975f-a74b0388185d" />
+
+3. Windows Server redeployment failed with error:
+OSProvisioningClientError: OS Provisioning did not finish in the allotted time.
+ScreenShots- <img width="1223" height="865" alt="Screenshot 2025-09-27 105738" src="https://github.com/user-attachments/assets/6a7b16b9-e240-4c94-812a-b2b93e7119a2" />
+
+This suggests the guest OS has not been properly prepared for use as a VM image.
+***Cause: Windows VM was captured without generalization (Sysprep).
+Fix: Prepare VM with Sysprep before capturing → then recreate from image.
+
+
+### Step 6 Step 5 — Attach & Configure Extra 10 GiB Disk (Ubuntu-Lab1)
+
+-Attached a 10 GiB disk from Azure Portal → VM → Disks
+Screenshot- <img width="1919" height="899" alt="Screenshot 2025-09-27 122425" src="https://github.com/user-attachments/assets/433d01cf-4182-4c7d-87f3-1293164afd64" />
+
+-Verified with: sudo fdisk -l
+-Output confirmed /dev/sdc
+-Partitioned the disk:
+-sudo fdisk /dev/sdc
+→ Created /dev/sdc1
+-Formatted the partition: sudo mkfs.ext4 /dev/sdc1
+-Mounted it:
+-sudo mkdir /mnt/newdisk
+-sudo mount /dev/sdc1 /mnt/newdisk
+-Verified: df -h
+-Output showed /dev/sdc1 mounted at /mnt/newdisk
+Screenshots- <img width="1217" height="848" alt="Screenshot 2025-09-27 122117" src="https://github.com/user-attachments/assets/820d63e4-0ae9-4bad-888b-6d1a772df2fa" />
+
+
 
 
 
