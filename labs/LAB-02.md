@@ -57,14 +57,17 @@ Through this lab, Azure Blob Storage is used not just as an object store, but as
 
 ### 📸 Screenshots
 
-- ![Storage Account Created](<img width="1917" height="899" alt="Screenshot 2025-10-08 015807" src="https://github.com/user-attachments/assets/c70cda90-94e0-4ed2-bab9-6717e7a27bdc" />
-)
-- ![Static Website Enabled](<img width="1884" height="901" alt="Screenshot 2025-10-08 015828" src="https://github.com/user-attachments/assets/7204f7e1-443d-4e49-9d30-f33b1694c649" />
-)
-- ![Files Uploaded](<img width="1919" height="911" alt="Screenshot 2025-10-08 015842" src="https://github.com/user-attachments/assets/120683fd-c221-4c21-8101-40010dd04481" />
-)
-- ![Website Live](<img width="1859" height="1079" alt="Screenshot 2025-10-08 015852" src="https://github.com/user-attachments/assets/014de820-afa9-48a4-bb76-e6de7f975cf2" />
-)
+- Storage Account Created:
+<img width="1917" height="899" alt="Screenshot 2025-10-08 015807" src="https://github.com/user-attachments/assets/c70cda90-94e0-4ed2-bab9-6717e7a27bdc" />
+
+- Static Website Enabled:
+<img width="1884" height="901" alt="Screenshot 2025-10-08 015828" src="https://github.com/user-attachments/assets/7204f7e1-443d-4e49-9d30-f33b1694c649" />
+
+- Files Uploaded:
+<img width="1919" height="911" alt="Screenshot 2025-10-08 015842" src="https://github.com/user-attachments/assets/120683fd-c221-4c21-8101-40010dd04481" />
+
+- Website Live:
+<img width="1859" height="1079" alt="Screenshot 2025-10-08 015852" src="https://github.com/user-attachments/assets/014de820-afa9-48a4-bb76-e6de7f975cf2" />
 
 ---
 
