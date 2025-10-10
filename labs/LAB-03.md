@@ -92,3 +92,24 @@ Students will learn to create VNets, configure subnets, establish **VNet-to-VNet
 
 
 ---
+
+## 🔐 Step 5 — Network Security Groups (NSG)
+
+### 🔹 Procedure
+1. Create a new **Network Security Group**:  
+   - **Name:** `NSG-East`  
+   - Add inbound rule:  
+     - Allow HTTP (80) / HTTPS (443)  
+     - Allow RDP (3389) for testing  
+2. Associate NSG with `Subnet-East`.  
+3. Validate using effective security rules.
+
+📷 **Screenshots**
+- NSG rule list
+<img width="1919" height="901" alt="Screenshot 2025-10-10 234834" src="https://github.com/user-attachments/assets/947af7a5-74aa-456d-9571-909a6b553ac4" />
+ 
+- Subnet association page  
+<img width="1905" height="686" alt="Screenshot 2025-10-10 234740" src="https://github.com/user-attachments/assets/e6e419a1-3dcd-4b31-a550-946b2f44e6f1" />
+
+---
+
