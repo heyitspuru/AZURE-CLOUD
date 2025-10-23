@@ -103,113 +103,97 @@ Set-AzVMExtension `
   -TypeHandlerVersion 1.4 `
   -SettingString '{"commandToExecute":"powershell Add-WindowsFeature Web-Server; Add-Content -Path \"C:\\inetpub\\wwwroot\\Default.htm\" -Value $($env:computername)"}' `
   -Location EastUS
+```
 Repeat for myVM2.
 
 📷 Screenshot: IIS installed successfully on both VMs.
 
-🧩 Task 8 — Add VMs to Backend Pool
+---
 
+## 🧩 Task 8 — Add VMs to Backend Pool
 Go to myLoadBalancer → Backend Pools → myBackendPool
 
 Select:
 
-Virtual Network: myVNet
-
-Associated to: Virtual Machines
+- Virtual Network: myVNet
+- Associated to: Virtual Machines
 
 Click + Add → Select myVM1 and myVM2 → Save.
 
-🧩 Task 9 — Test the Load Balancer
+---
 
-Copy the Public IP of myLoadBalancer.
-
-Open a browser and enter the IP.
-
-Refresh repeatedly — responses should alternate between myVM1 and myVM2.
+## 🧩 Task 9 — Test the Load Balancer
+- Copy the Public IP of myLoadBalancer.
+- Open a browser and enter the IP.
+- Refresh repeatedly — responses should alternate between myVM1 and myVM2.
 
 📷 Screenshot: Browser responses showing both VM names.
 
-🧩 Task 10 — Create an Internal Load Balancer
+---
 
+## 🧩 Task 10 — Create an Internal Load Balancer
 Repeat creation, but choose:
 
-Type: Private
-
-Frontend IP Configuration: Private (from myVNet)
+- Type: Private
+- Frontend IP Configuration: Private (from myVNet)
 
 Add internal backend VMs and rules on port 80.
 
-🧩 Task 11 — Create a Zone-Redundant Load Balancer
+---
 
-Select SKU: Standard and Region supporting Availability Zones (e.g., East US 2).
+## 🧩 Task 11 — Create a Zone-Redundant Load Balancer
+- Select SKU: Standard and Region supporting Availability Zones (e.g., East US 2).
+- Assign frontend IPs across zones 1–3.
+- Add backend pool and rules as in Task 5.
 
-Assign frontend IPs across zones 1–3.
-
-Add backend pool and rules as in Task 5.
 📷 Screenshot: Zone redundancy diagram.
 
-🧩 Task 12 — Implement Azure Traffic Manager
+---
 
-Search Traffic Manager Profiles → Create
+## 🧩 Task 12 — Implement Azure Traffic Manager
+- Search Traffic Manager Profiles → Create
+- Configure:
+  - Name: myTrafficManager
+  - Routing Method: Performance (or Geographic)
+  - Endpoints: Add Public IPs of regional load balancers
+- Save and test routing by accessing the DNS name.
 
-Configure:
-
-Name: myTrafficManager
-
-Routing Method: Performance (or Geographic)
-
-Endpoints: Add Public IPs of regional load balancers
-
-Save and test routing by accessing the DNS name.
 📷 Screenshot: Endpoint status = Online.
 
-🧩 Task 13 — Configure Azure Application Gateway
+---
+
+## 🧩 Task 13 — Configure Azure Application Gateway
+
 Overview
 
 Application Gateway is a Layer 7 load balancer for HTTP/S traffic with routing rules, listeners, and backend pools.
 
 Steps
 
-Create → Networking → Application Gateway
-
-Basics:
-
-Resource Group: myResourceGroupAG
-
-Name: myAppGateway
-
-SKU: Standard v2
-
-Virtual Network: Create new myVNet with:
-
-myAGSubnet (10.0.0.0/24) for gateway
-
-myBackendSubnet (10.0.1.0/24) for VMs
-
-Frontends: Public IP → myAGPublicIPAddress
-
-Backends: Add empty pool myBackendPool
-
-Configuration: Add routing rule:
-
-Listener → myListener (Port 80)
-
-Backend pool → myBackendPool
-
-Backend setting → myBackendSetting (Port 80)
-
-Create and wait for deployment.
-
-Create two backend VMs (myVM, myVM2) in myBackendSubnet, install IIS.
-
-Associate them to myBackendPool.
-
-Test by browsing the Application Gateway’s Public IP.
+- Create → Networking → Application Gateway
+- Basics:
+  - Resource Group: myResourceGroupAG
+  - Name: myAppGateway
+  - SKU: Standard v2
+  - Virtual Network: Create new myVNet with:
+    - myAGSubnet (10.0.0.0/24) for gateway
+    - myBackendSubnet (10.0.1.0/24) for VMs
+- Frontends: Public IP → myAGPublicIPAddress
+- Backends: Add empty pool myBackendPool
+- Configuration: Add routing rule:
+  - Listener → myListener (Port 80)
+  - Backend pool → myBackendPool
+  - Backend setting → myBackendSetting (Port 80)
+- Create and wait for deployment.
+- Create two backend VMs (myVM, myVM2) in myBackendSubnet, install IIS.
+- Associate them to myBackendPool.
+- Test by browsing the Application Gateway’s Public IP.
 
 📷 Screenshot: IIS responses from both backend VMs.
 
-🧩 Task 14 — Gateway Load Balancer (Concept)
+---
 
+## 🧩 Task 14 — Gateway Load Balancer (Concept)
 Integrates with Network Virtual Appliances (NVAs) for deep packet inspection.
 
 Uses “bump-in-the-wire” topology between a Frontend Load Balancer and an NVA backend.
@@ -218,21 +202,32 @@ Ensures high-availability & transparent traffic redirection.
 
 📷 Optional diagram: Gateway LB architecture.
 
-🧠 Key Learnings
-Concept	Summary
-Public LB	Distributes Internet traffic to VMs
-Private LB	Balances internal traffic within a VNet
-Zone-Redundant LB	Ensures high availability across zones
-Traffic Manager	Routes global traffic using DNS policies
-Application Gateway	Provides L7 routing and SSL termination
-Gateway LB	Integrates NVAs for secure inline processing
-🩵 Troubleshooting Notes
-Issue	Cause	Resolution
-Blank browser page	IIS not installed	Re-run Set-AzVMExtension
-VMs not receiving traffic	Backend pool empty	Re-associate VMs
-Health Probe unhealthy	Port blocked	Allow inbound 80 in NSG
-Traffic Manager inactive	Endpoint disabled	Enable & verify DNS name
-✅ Conclusion
+---
 
-Azure Load Balancers and Traffic Managers enable scalable, fault-tolerant application delivery.
+## 🧠 Key Learnings
+
+Concept | Summary
+--- | ---
+Public LB | Distributes Internet traffic to VMs
+Private LB | Balances internal traffic within a VNet
+Zone-Redundant LB | Ensures high availability across zones
+Traffic Manager | Routes global traffic using DNS policies
+Application Gateway | Provides L7 routing and SSL termination
+Gateway LB | Integrates NVAs for secure inline processing
+
+---
+
+## 🩵 Troubleshooting Notes
+
+Issue | Cause | Resolution
+--- | --- | ---
+Blank browser page | IIS not installed | Re-run Set-AzVMExtension
+VMs not receiving traffic | Backend pool empty | Re-associate VMs
+Health Probe unhealthy | Port blocked | Allow inbound 80 in NSG
+Traffic Manager inactive | Endpoint disabled | Enable & verify DNS name
+
+---
+
+## ✅ Conclusion
+Azure Load Balancers and Traffic Managers enable scalable, fault-tolerant application delivery.  
 This lab reinforces understanding of multi-tier architectures, redundancy, and intelligent routing in Azure networking.
