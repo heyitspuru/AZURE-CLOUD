@@ -32,7 +32,8 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Public IP Address:** create new → `myPublicIP`
 3. Click **Review + Create → Create**
 
-📷 *Screenshots:* Load Balancer overview & Public IP association.
+📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/cba7898c-0b5b-4030-b358-882d413b089b" />
+* Load Balancer overview & Public IP association.
 
 ---
 
@@ -44,7 +45,8 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Address space:** `10.0.0.0/16`
    - **Subnet:** `mySubnet` → `10.0.0.0/24`
 3. Review + Create → Confirm deployment.
-
+📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/807f9348-9738-4868-af2e-076de9d18a7b" />
+*
 ---
 
 ## 🧩 Task 3 — Create a Backend Pool
@@ -52,7 +54,8 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 2. Name: `myBackendPool`  
 3. Associate to `myVNet`, choose *Virtual machines*, and leave VMs unassigned for now.  
 4. Click **Add**.
-
+📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/eee6172a-6970-4fbf-89be-492e92bc2177" />
+*
 ---
 
 ## 🧩 Task 4 — Create a Health Probe
@@ -64,7 +67,8 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Interval:** 5 seconds  
    - **Unhealthy threshold:** 2  
 3. Save changes.
-
+📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/82f5eaa5-d6e9-4b3a-ba63-1c5d33a37aff" />
+*
 ---
 
 ## 🧩 Task 5 — Create a Load Balancer Rule
@@ -78,7 +82,8 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Backend port:** 80  
    - **Health probe:** `myHealthProbe`  
 3. Click **OK / Save**.
-
+📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/18b65cf2-59ec-449a-823b-35ef5438a478" />
+*
 ---
 
 ## 🧩 Task 6 — Create Two Windows VMs
