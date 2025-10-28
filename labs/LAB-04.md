@@ -45,7 +45,8 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Address space:** `10.0.0.0/16`
    - **Subnet:** `mySubnet` → `10.0.0.0/24`
 3. Review + Create → Confirm deployment.
-📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/807f9348-9738-4868-af2e-076de9d18a7b" />
+📷 *<img <img width="1919" height="763" alt="Screenshot 2025-10-24 174814" src="https://github.com/user-attachments/assets/361bdf83-ee08-452d-aece-5a8ccb0771ca" />
+ />
 *
 ---
 
@@ -54,7 +55,8 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 2. Name: `myBackendPool`  
 3. Associate to `myVNet`, choose *Virtual machines*, and leave VMs unassigned for now.  
 4. Click **Add**.
-📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/eee6172a-6970-4fbf-89be-492e92bc2177" />
+📷 *<img <img width="1915" height="746" alt="Screenshot 2025-10-24 181832" src="https://github.com/user-attachments/assets/c7fba84d-59a8-43db-a918-fb378f5b92d3" />
+ />
 *
 ---
 
@@ -67,7 +69,8 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Interval:** 5 seconds  
    - **Unhealthy threshold:** 2  
 3. Save changes.
-📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/82f5eaa5-d6e9-4b3a-ba63-1c5d33a37aff" />
+📷 *<img <img width="1919" height="622" alt="Screenshot 2025-10-24 184238" src="https://github.com/user-attachments/assets/17e63034-c759-44b7-97e9-12985625487c" />
+ />
 *
 ---
 
@@ -82,7 +85,8 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Backend port:** 80  
    - **Health probe:** `myHealthProbe`  
 3. Click **OK / Save**.
-📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/18b65cf2-59ec-449a-823b-35ef5438a478" />
+📷 *<img <img width="1919" height="764" alt="Screenshot 2025-10-24 184533" src="https://github.com/user-attachments/assets/8359ccb8-c0d4-410f-939b-68008a044851" />
+ />
 *
 ---
 
