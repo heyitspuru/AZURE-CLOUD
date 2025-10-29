@@ -97,6 +97,11 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 4. Confirm both appear under your resource group.
 
 📷 *Screenshot:* Availability Set & VM overview.
+<img width="1912" height="909" alt="Screenshot 2025-10-29 113550" src="https://github.com/user-attachments/assets/729bba7b-33e8-44a8-bbdd-a78be817d7fe" />
+
+<img width="1919" height="782" alt="Screenshot 2025-10-29 113719" src="https://github.com/user-attachments/assets/ba37b110-ca4c-406f-86b8-1b2fa52aca2f" />
+
+<img width="1919" height="827" alt="Screenshot 2025-10-29 113738" src="https://github.com/user-attachments/assets/5d9eb78e-03f1-4275-ac4b-34a8b8ba6773" />
 
 ---
 
@@ -109,19 +114,24 @@ Install IIS on both backend VMs (`myVM1`, `myVM2`) and verify they respond corre
 
 #### 🔹 IIS Installation
 IIS installed successfully on both VMs using the **Custom Script Extension**:
-
-```bash
+```
 az vm extension set \
   --resource-group LBresourcegroup \
   --vm-name myVM1 \
   --name CustomScriptExtension \
   --publisher Microsoft.Compute \
-  --settings '{"commandToExecute":"powershell Add-WindowsFeature Web-Server; Add-Content -Path C:\\inetpub\\wwwroot\\Default.htm -Value $env:computername"}'
+  --settings '{"commandToExecute":"powershell Add-WindowsFeature Web-Server; Add-Content -Path C:\\inetpub\\wwwroot\\Default.htm -Value $env:computername"}
+```
 ✅ Output:
 
-json
-Copy code
+json 
+```
 "provisioningState": "Succeeded"
+```
+*Screenshot*- VM-1 <img width="1919" height="665" alt="Screenshot 2025-10-29 115413" src="https://github.com/user-attachments/assets/5fec31f1-2d5b-44f6-93a7-6c9fa6ac777b" />
+VM-2- <img width="1919" height="470" alt="Screenshot 2025-10-29 115432" src="https://github.com/user-attachments/assets/676d7f5f-5afb-411c-a560-b4068d8e8b49" />
+
+
 🔹 Verification via Azure Bastion
 Since both VMs were created without public IPs, direct RDP access was unavailable.
 
@@ -159,10 +169,11 @@ confirming successful IIS setup.
 Bastion connection window
 
 IIS “myVM1” page in browser
+<img width="1911" height="916" alt="Screenshot 2025-10-29 120059" src="https://github.com/user-attachments/assets/85bdfd66-9e99-47f5-8df2-977087243e94" />
 
 ---
 
-## 🧩 Task 8 — Add VMs to Backend Pool
+### 🧩 Task 8 — Add VMs to Backend Pool
 Go to myLoadBalancer → Backend Pools → myBackendPool
 
 Select:
@@ -171,6 +182,7 @@ Select:
 - Associated to: Virtual Machines
 
 Click + Add → Select myVM1 and myVM2 → Save.
+*Screenshot* <img width="1919" height="850" alt="Screenshot 2025-10-29 120713" src="https://github.com/user-attachments/assets/13d472b6-03ba-4d14-aa61-240a724b9ed2" />
 
 ---
 
@@ -179,7 +191,7 @@ Click + Add → Select myVM1 and myVM2 → Save.
 - Open a browser and enter the IP.
 - Refresh repeatedly — responses should alternate between myVM1 and myVM2.
 
-📷 Screenshot: Browser responses showing both VM names.
+📷 Screenshot: Browser responses showing both VM names. 
 
 ---
 
