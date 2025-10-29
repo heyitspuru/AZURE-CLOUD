@@ -257,13 +257,71 @@ Testing VM1- <img width="1645" height="481" alt="Screenshot 2025-10-29 133330" s
 
 
 
-## 🧩 Task 10 — Create an Internal Load Balancer
-Repeat creation, but choose:
+### 🧩 Task 10 — Internal Load Balancer (ILB) Configuration and Testing
 
-- Type: Private
-- Frontend IP Configuration: Private (from myVNet)
+#### 🎯 Objective
+Deploy and validate an **Internal Load Balancer (ILB)** that distributes HTTP traffic between backend IIS VMs within the same Virtual Network (VNet).
 
-Add internal backend VMs and rules on port 80.
+---
+
+#### 🧭 Steps Followed
+
+#### 1️⃣ Create Internal Load Balancer
+- **Name:** `myInternalLB`
+- **Type:** Internal  
+- **Region:** East Asia  
+- **Virtual Network:** `myVnet`
+- **Subnet:** default
+- **Frontend IP Configuration:**  
+  - Name: `myFrontendPrivateIP`  
+  - Private IP: `10.0.0.4` (Dynamic allocation)
+
+---
+
+#### 2️⃣ Configure Backend Pool
+- Navigated to **myInternalLB → Backend pools → + Add**
+- **Name:** `myInternalBackendPool`
+- Added both IIS VMs:
+  - `myVM1`
+  - `myVM2`
+- Saved configuration successfully.
+
+---
+
+#### 3️⃣ Create Health Probe
+- **Name:** `myInternalProbe`
+- **Protocol:** TCP  
+- **Port:** 80  
+- **Interval:** 5 seconds  
+- **Unhealthy threshold:** 2  
+- Linked to backend pool to monitor VM health.
+
+---
+
+#### 4️⃣ Add Load Balancing Rule
+- **Name:** `myInternalRule`
+- **Frontend IP:** `myFrontendPrivateIP`
+- **Backend Pool:** `myInternalBackendPool`
+- **Protocol:** TCP  
+- **Frontend Port:** 80  
+- **Backend Port:** 80  
+- **Health Probe:** `myInternalProbe`
+- **Session Persistence:** None  
+- **Idle Timeout:** 4 minutes  
+
+📸 *Screenshot:* Load balancing rule configuration summary
+<img width="1852" height="875" alt="Screenshot 2025-10-29 160812" src="https://github.com/user-attachments/assets/1f9270d7-2a4b-470b-a4a3-dee4a02d3926" />
+
+
+---
+
+#### 5️⃣ Test Internal Load Balancer
+Test performed **inside the VNet** using Bastion (PowerShell on myVM1):
+
+```powershell
+Invoke-WebRequest http://10.0.0.4
+```
+ScreenShot:<img width="1646" height="704" alt="Screenshot 2025-10-29 161102" src="https://github.com/user-attachments/assets/3fbb69fb-ebaf-4a2c-b5cb-129ea152f2e2" />
 
 ---
 
