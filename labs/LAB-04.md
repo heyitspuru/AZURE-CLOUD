@@ -32,7 +32,7 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Public IP Address:** create new → `myPublicIP`
 3. Click **Review + Create → Create**
 
-📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/cba7898c-0b5b-4030-b358-882d413b089b" />
+📷 *<img width="1919" height="873" alt="Screenshot 2025-10-24 174201" src="https://github.com/user-attachments/assets/cba7898c-0b5b-4030-b358-882d413b089b" />*  
 * Load Balancer overview & Public IP association.
 
 ---
@@ -45,9 +45,9 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Address space:** `10.0.0.0/16`
    - **Subnet:** `mySubnet` → `10.0.0.0/24`
 3. Review + Create → Confirm deployment.
-📷 *<img <img width="1919" height="763" alt="Screenshot 2025-10-24 174814" src="https://github.com/user-attachments/assets/361bdf83-ee08-452d-aece-5a8ccb0771ca" />
- />
-*
+
+📷 *<img width="1919" height="763" alt="Screenshot 2025-10-24 174814" src="https://github.com/user-attachments/assets/361bdf83-ee08-452d-aece-5a8ccb0771ca" />*
+
 ---
 
 ## 🧩 Task 3 — Create a Backend Pool
@@ -55,9 +55,9 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 2. Name: `myBackendPool`  
 3. Associate to `myVNet`, choose *Virtual machines*, and leave VMs unassigned for now.  
 4. Click **Add**.
-📷 *<img <img width="1915" height="746" alt="Screenshot 2025-10-24 181832" src="https://github.com/user-attachments/assets/c7fba84d-59a8-43db-a918-fb378f5b92d3" />
- />
-*
+
+📷 *<img width="1915" height="746" alt="Screenshot 2025-10-24 181832" src="https://github.com/user-attachments/assets/c7fba84d-59a8-43db-a918-fb378f5b92d3" />*
+
 ---
 
 ## 🧩 Task 4 — Create a Health Probe
@@ -69,9 +69,9 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Interval:** 5 seconds  
    - **Unhealthy threshold:** 2  
 3. Save changes.
-📷 *<img <img width="1919" height="622" alt="Screenshot 2025-10-24 184238" src="https://github.com/user-attachments/assets/17e63034-c759-44b7-97e9-12985625487c" />
- />
-*
+
+📷 *<img width="1919" height="622" alt="Screenshot 2025-10-24 184238" src="https://github.com/user-attachments/assets/17e63034-c759-44b7-97e9-12985625487c" />*
+
 ---
 
 ## 🧩 Task 5 — Create a Load Balancer Rule
@@ -85,9 +85,9 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
    - **Backend port:** 80  
    - **Health probe:** `myHealthProbe`  
 3. Click **OK / Save**.
-📷 *<img <img width="1919" height="764" alt="Screenshot 2025-10-24 184533" src="https://github.com/user-attachments/assets/8359ccb8-c0d4-410f-939b-68008a044851" />
- />
-*
+
+📷 *<img width="1919" height="764" alt="Screenshot 2025-10-24 184533" src="https://github.com/user-attachments/assets/8359ccb8-c0d4-410f-939b-68008a044851" />*
+
 ---
 
 ## 🧩 Task 6 — Create Two Windows VMs
@@ -96,12 +96,10 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 3. Disable public IP; RDP via Bastion if needed.  
 4. Confirm both appear under your resource group.
 
-📷 *Screenshot:* Availability Set & VM overview.
-<img width="1912" height="909" alt="Screenshot 2025-10-29 113550" src="https://github.com/user-attachments/assets/729bba7b-33e8-44a8-bbdd-a78be817d7fe" />
-
-<img width="1919" height="782" alt="Screenshot 2025-10-29 113719" src="https://github.com/user-attachments/assets/ba37b110-ca4c-406f-86b8-1b2fa52aca2f" />
-
-<img width="1919" height="827" alt="Screenshot 2025-10-29 113738" src="https://github.com/user-attachments/assets/5d9eb78e-03f1-4275-ac4b-34a8b8ba6773" />
+📷 *Availability Set & VM overview*  
+![Availability Set](https://github.com/user-attachments/assets/729bba7b-33e8-44a8-bbdd-a78be817d7fe)
+![VM Overview 1](https://github.com/user-attachments/assets/ba37b110-ca4c-406f-86b8-1b2fa52aca2f)
+![VM Overview 2](https://github.com/user-attachments/assets/5d9eb78e-03f1-4275-ac4b-34a8b8ba6773)
 
 ---
 
@@ -110,11 +108,10 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 **Objective:**  
 Install IIS on both backend VMs (`myVM1`, `myVM2`) and verify they respond correctly for Load Balancer testing.
 
----
-
 #### 🔹 IIS Installation
 IIS installed successfully on both VMs using the **Custom Script Extension**:
-```
+
+```powershell
 az vm extension set \
   --resource-group LBresourcegroup \
   --vm-name myVM1 \
@@ -122,54 +119,53 @@ az vm extension set \
   --publisher Microsoft.Compute \
   --settings '{"commandToExecute":"powershell Add-WindowsFeature Web-Server; Add-Content -Path C:\\inetpub\\wwwroot\\Default.htm -Value $env:computername"}
 ```
+
 ✅ Output:
 
-json 
-```
+```json
 "provisioningState": "Succeeded"
 ```
-*Screenshot*- VM-1 <img width="1919" height="665" alt="Screenshot 2025-10-29 115413" src="https://github.com/user-attachments/assets/5fec31f1-2d5b-44f6-93a7-6c9fa6ac777b" />
-VM-2- <img width="1919" height="470" alt="Screenshot 2025-10-29 115432" src="https://github.com/user-attachments/assets/676d7f5f-5afb-411c-a560-b4068d8e8b49" />
 
+*Screenshot* - VM-1  
+![VM1 IIS](https://github.com/user-attachments/assets/5fec31f1-2d5b-44f6-93a7-6c9fa6ac777b)  
+VM-2 -  
+![VM2 IIS](https://github.com/user-attachments/assets/676d7f5f-5afb-411c-a560-b4068d8e8b49)
 
-🔹 Verification via Azure Bastion
+#### 🔹 Verification via Azure Bastion
 Since both VMs were created without public IPs, direct RDP access was unavailable.
 
-Fix Implemented:
+Fix Implemented:  
 Used Azure Bastion for secure in-browser RDP access.
 
 Steps:
 
-Created Bastion host:
+- Created Bastion host:
+  - Resource Group: LBresourcegroup
+  - Name: MyBastionHost
+  - Virtual Network: myVNet
+  - Public IP: MyBastionIP
+- Navigated to myVM1 → Connect → Bastion → Login
+- Verified IIS by browsing:
 
-Resource Group: LBresourcegroup
-
-Name: MyBastionHost
-
-Virtual Network: myVNet
-
-Public IP: MyBastionIP
-
-Navigated to myVM1 → Connect → Bastion → Login
-
-Verified IIS by browsing:
-
+```text
 arduino
 Copy code
 http://localhost
+```
+
 The web page displayed the hostname:
 
+```text
 nginx
 Copy code
 myVM1
+```
+
 confirming successful IIS setup.
 
-📸 Screenshots:
-
-Bastion connection window
-
-IIS “myVM1” page in browser
-<img width="1911" height="916" alt="Screenshot 2025-10-29 120059" src="https://github.com/user-attachments/assets/85bdfd66-9e99-47f5-8df2-977087243e94" />
+📸 Screenshots:  
+Bastion connection window / IIS “myVM1” page in browser  
+![Bastion & IIS](https://github.com/user-attachments/assets/85bdfd66-9e99-47f5-8df2-977087243e94)
 
 ---
 
@@ -182,7 +178,9 @@ Select:
 - Associated to: Virtual Machines
 
 Click + Add → Select myVM1 and myVM2 → Save.
-*Screenshot* <img width="1919" height="850" alt="Screenshot 2025-10-29 120713" src="https://github.com/user-attachments/assets/13d472b6-03ba-4d14-aa61-240a724b9ed2" />
+
+*Screenshot*  
+![Backend Pool Add VMs](https://github.com/user-attachments/assets/13d472b6-03ba-4d14-aa61-240a724b9ed2)
 
 ---
 
@@ -203,70 +201,72 @@ Verify that inbound HTTP traffic (port 80) is evenly distributed between both ba
    ```powershell
    Get-Service W3SVC
    Invoke-WebRequest http://localhost
-✅ StatusCode 200 OK, Content : myVM1 (or myVM2)
+   ```
+   ✅ StatusCode 200 OK, Content : myVM1 (or myVM2)
 
-Check Health Probe
+   Check Health Probe
 
-Protocol: TCP
+   Protocol: TCP
 
-Port: 80
+   Port: 80
 
-Interval: 5 s
+   Interval: 5 s
 
-Unhealthy threshold: 2
+   Unhealthy threshold: 2
 
-Status = Healthy
+   Status = Healthy
 
-NSG Rule Configuration
+   NSG Rule Configuration
 
-Name	Port	Protocol	Action	Priority
-Allow-HTTP	80	TCP	Allow	100
+   Name	Port	Protocol	Action	Priority
+   Allow-HTTP	80	TCP	Allow	100
 
-Load Balancing Rule
+   Load Balancing Rule
 
-Frontend IP = ________
+   Frontend IP = ________
 
-Backend Pool = myBackendPool
+   Backend Pool = myBackendPool
 
-Port = 80 → 80
+   Port = 80 → 80
 
-Probe = myHealthProbe
+   Probe = myHealthProbe
 
-Enabled ✅
+   Enabled ✅
 
-Final Verification
+   Final Verification
 
-From local or Bastion PowerShell:
+   From local or Bastion PowerShell:
 
-powershell
-Copy code
-Invoke-WebRequest http://_______
-Response alternates between myVM1 and myVM2 → Load Balancer working successfully.
+   ```powershell
+   Invoke-WebRequest http://_______
+   ```
+   Response alternates between myVM1 and myVM2 → Load Balancer working successfully.
 
-🧰 Troubleshooting & Key Findings
-Issue	Root Cause	Resolution
-ERR_CONNECTION_TIMED_OUT	Missing inbound NSG rule for port 80	Added Allow-HTTP rule
-Health Probe Unhealthy	IIS not listening / port blocked	Verified IIS service running and port open
-“Web Page Blocked – Company Policy”	Local network firewall blocking HTTP traffic	Tested via Azure Bastion / mobile hotspot – works
-Only one VM responds	One backend unhealthy	Re-checked Custom Script Extension and probe status
+### 🧰 Troubleshooting & Key Findings
+Issue | Root Cause | Resolution
+--- | --- | ---
+ERR_CONNECTION_TIMED_OUT | Missing inbound NSG rule for port 80 | Added Allow-HTTP rule
+Health Probe Unhealthy | IIS not listening / port blocked | Verified IIS service running and port open
+“Web Page Blocked – Company Policy” | Local network firewall blocking HTTP traffic | Tested via Azure Bastion / mobile hotspot - works
+Only one VM responds | One backend unhealthy | Re-checked Custom Script Extension and probe status
 
-📸 Screenshots to Include
-Validating IIS for Health Probe in VM1- <img width="1484" height="752" alt="Screenshot 2025-10-29 132629" src="https://github.com/user-attachments/assets/8a237f71-9c77-443e-a459-6d6c72af5487" />
- 
-Testing VM1- <img width="1645" height="481" alt="Screenshot 2025-10-29 133330" src="https://github.com/user-attachments/assets/aadf8b4b-05d9-4700-abb5-f896feb5ee08" />
+📸 Screenshots to Include  
+Validating IIS for Health Probe in VM1  
+![Validating IIS VM1](https://github.com/user-attachments/assets/8a237f71-9c77-443e-a459-6d6c72af5487)
 
+Testing VM1  
+![Testing VM1](https://github.com/user-attachments/assets/aadf8b4b-05d9-4700-abb5-f896feb5ee08)
 
+---
 
 ### 🧩 Task 10 — Internal Load Balancer (ILB) Configuration and Testing
 
 #### 🎯 Objective
 Deploy and validate an **Internal Load Balancer (ILB)** that distributes HTTP traffic between backend IIS VMs within the same Virtual Network (VNet).
 
----
-
 #### 🧭 Steps Followed
 
-#### 1️⃣ Create Internal Load Balancer
+##### 1️⃣ Create Internal Load Balancer
 - **Name:** `myInternalLB`
 - **Type:** Internal  
 - **Region:** East Asia  
@@ -276,9 +276,7 @@ Deploy and validate an **Internal Load Balancer (ILB)** that distributes HTTP tr
   - Name: `myFrontendPrivateIP`  
   - Private IP: `10.0.0.4` (Dynamic allocation)
 
----
-
-#### 2️⃣ Configure Backend Pool
+##### 2️⃣ Configure Backend Pool
 - Navigated to **myInternalLB → Backend pools → + Add**
 - **Name:** `myInternalBackendPool`
 - Added both IIS VMs:
@@ -286,9 +284,7 @@ Deploy and validate an **Internal Load Balancer (ILB)** that distributes HTTP tr
   - `myVM2`
 - Saved configuration successfully.
 
----
-
-#### 3️⃣ Create Health Probe
+##### 3️⃣ Create Health Probe
 - **Name:** `myInternalProbe`
 - **Protocol:** TCP  
 - **Port:** 80  
@@ -296,9 +292,7 @@ Deploy and validate an **Internal Load Balancer (ILB)** that distributes HTTP tr
 - **Unhealthy threshold:** 2  
 - Linked to backend pool to monitor VM health.
 
----
-
-#### 4️⃣ Add Load Balancing Rule
+##### 4️⃣ Add Load Balancing Rule
 - **Name:** `myInternalRule`
 - **Frontend IP:** `myFrontendPrivateIP`
 - **Backend Pool:** `myInternalBackendPool`
@@ -309,19 +303,18 @@ Deploy and validate an **Internal Load Balancer (ILB)** that distributes HTTP tr
 - **Session Persistence:** None  
 - **Idle Timeout:** 4 minutes  
 
-📸 *Screenshot:* Load balancing rule configuration summary
-<img width="1852" height="875" alt="Screenshot 2025-10-29 160812" src="https://github.com/user-attachments/assets/1f9270d7-2a4b-470b-a4a3-dee4a02d3926" />
+📸 *Screenshot:* Load balancing rule configuration summary  
+![ILB Rule](https://github.com/user-attachments/assets/1f9270d7-2a4b-470b-a4a3-dee4a02d3926)
 
-
----
-
-#### 5️⃣ Test Internal Load Balancer
+##### 5️⃣ Test Internal Load Balancer
 Test performed **inside the VNet** using Bastion (PowerShell on myVM1):
 
 ```powershell
 Invoke-WebRequest http://10.0.0.4
 ```
-ScreenShot:<img width="1646" height="704" alt="Screenshot 2025-10-29 161102" src="https://github.com/user-attachments/assets/3fbb69fb-ebaf-4a2c-b5cb-129ea152f2e2" />
+
+Screenshot:  
+![ILB Test](https://github.com/user-attachments/assets/3fbb69fb-ebaf-4a2c-b5cb-129ea152f2e2)
 
 ---
 
