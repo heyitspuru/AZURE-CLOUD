@@ -100,22 +100,65 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 
 ---
 
-## 🧩 Task 7 — Install IIS for Testing
-Run in **Azure Cloud Shell (PowerShell):**
-```powershell
-Set-AzVMExtension `
-  -ResourceGroupName LBresourcegroup `
-  -ExtensionName IIS `
-  -VMName myVM1 `
-  -Publisher Microsoft.Compute `
-  -ExtensionType CustomScriptExtension `
-  -TypeHandlerVersion 1.4 `
-  -SettingString '{"commandToExecute":"powershell Add-WindowsFeature Web-Server; Add-Content -Path \"C:\\inetpub\\wwwroot\\Default.htm\" -Value $($env:computername)"}' `
-  -Location EastUS
-```
-Repeat for myVM2.
+### 🧩 Step 7 — IIS Installation & Verification
 
-📷 Screenshot: IIS installed successfully on both VMs.
+**Objective:**  
+Install IIS on both backend VMs (`myVM1`, `myVM2`) and verify they respond correctly for Load Balancer testing.
+
+---
+
+#### 🔹 IIS Installation
+IIS installed successfully on both VMs using the **Custom Script Extension**:
+
+```bash
+az vm extension set \
+  --resource-group LBresourcegroup \
+  --vm-name myVM1 \
+  --name CustomScriptExtension \
+  --publisher Microsoft.Compute \
+  --settings '{"commandToExecute":"powershell Add-WindowsFeature Web-Server; Add-Content -Path C:\\inetpub\\wwwroot\\Default.htm -Value $env:computername"}'
+✅ Output:
+
+json
+Copy code
+"provisioningState": "Succeeded"
+🔹 Verification via Azure Bastion
+Since both VMs were created without public IPs, direct RDP access was unavailable.
+
+Fix Implemented:
+Used Azure Bastion for secure in-browser RDP access.
+
+Steps:
+
+Created Bastion host:
+
+Resource Group: LBresourcegroup
+
+Name: MyBastionHost
+
+Virtual Network: myVNet
+
+Public IP: MyBastionIP
+
+Navigated to myVM1 → Connect → Bastion → Login
+
+Verified IIS by browsing:
+
+arduino
+Copy code
+http://localhost
+The web page displayed the hostname:
+
+nginx
+Copy code
+myVM1
+confirming successful IIS setup.
+
+📸 Screenshots:
+
+Bastion connection window
+
+IIS “myVM1” page in browser
 
 ---
 
