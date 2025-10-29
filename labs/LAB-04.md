@@ -186,14 +186,76 @@ Click + Add → Select myVM1 and myVM2 → Save.
 
 ---
 
-## 🧩 Task 9 — Test the Load Balancer
-- Copy the Public IP of myLoadBalancer.
-- Open a browser and enter the IP.
-- Refresh repeatedly — responses should alternate between myVM1 and myVM2.
+## 🧩 Task 9 – Testing and Validating the Load Balancer
+Verify that inbound HTTP traffic (port 80) is evenly distributed between both backend IIS VMs (`myVM1` and `myVM2`) using the Azure Load Balancer.
 
-📷 Screenshot: Browser responses showing both VM names. 
+### 🧭 Procedure
 
----
+1. **Locate Frontend IP**
+   - Portal → *Load Balancers → myLoadBalancer → Overview*
+   - Copied frontend public IP → `........`
+
+2. **Access Web Service**
+   - Opened browser → `http://.......`
+   - Page initially timed out → checked health probes and NSG rules.
+
+3. **Verify IIS Health (inside VM)**
+   ```powershell
+   Get-Service W3SVC
+   Invoke-WebRequest http://localhost
+✅ StatusCode 200 OK, Content : myVM1 (or myVM2)
+
+Check Health Probe
+
+Protocol: TCP
+
+Port: 80
+
+Interval: 5 s
+
+Unhealthy threshold: 2
+
+Status = Healthy
+
+NSG Rule Configuration
+
+Name	Port	Protocol	Action	Priority
+Allow-HTTP	80	TCP	Allow	100
+
+Load Balancing Rule
+
+Frontend IP = ________
+
+Backend Pool = myBackendPool
+
+Port = 80 → 80
+
+Probe = myHealthProbe
+
+Enabled ✅
+
+Final Verification
+
+From local or Bastion PowerShell:
+
+powershell
+Copy code
+Invoke-WebRequest http://_______
+Response alternates between myVM1 and myVM2 → Load Balancer working successfully.
+
+🧰 Troubleshooting & Key Findings
+Issue	Root Cause	Resolution
+ERR_CONNECTION_TIMED_OUT	Missing inbound NSG rule for port 80	Added Allow-HTTP rule
+Health Probe Unhealthy	IIS not listening / port blocked	Verified IIS service running and port open
+“Web Page Blocked – Company Policy”	Local network firewall blocking HTTP traffic	Tested via Azure Bastion / mobile hotspot – works
+Only one VM responds	One backend unhealthy	Re-checked Custom Script Extension and probe status
+
+📸 Screenshots to Include
+Validating IIS for Health Probe in VM1- <img width="1484" height="752" alt="Screenshot 2025-10-29 132629" src="https://github.com/user-attachments/assets/8a237f71-9c77-443e-a459-6d6c72af5487" />
+ 
+Testing VM1- <img width="1645" height="481" alt="Screenshot 2025-10-29 133330" src="https://github.com/user-attachments/assets/aadf8b4b-05d9-4700-abb5-f896feb5ee08" />
+
+
 
 ## 🧩 Task 10 — Create an Internal Load Balancer
 Repeat creation, but choose:
