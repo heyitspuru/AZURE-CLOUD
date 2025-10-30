@@ -323,7 +323,7 @@ Screenshot:
 ![ILB Test](https://github.com/user-attachments/assets/3fbb69fb-ebaf-4a2c-b5cb-129ea152f2e2)
 
 ---
-## NOTE: I Could not Uploade the ScreenShots for the Next 3 tasks as my subscription for Azure had limitations. All the Steps are mentioned for smooht execution.
+### Note: I could not upload the Screenshots for the Next 3 tasks as my subscription for Azure had limitations. All the steps are mentioned for smooth execution.
 
 ## 🧩 Task 11 — Create a Zone-Redundant Load Balancer
 
