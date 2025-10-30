@@ -38,6 +38,7 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 ---
 
 ## 🧩 Task 2 — Create a Virtual Network
+
 1. Go to **Create a resource → Networking → Virtual Network**  
 2. Configure:
    - **Name:** `myVNet`
@@ -51,6 +52,7 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 ---
 
 ## 🧩 Task 3 — Create a Backend Pool
+
 1. Open **myLoadBalancer → Settings → Backend Pools → Add**  
 2. Name: `myBackendPool`  
 3. Associate to `myVNet`, choose *Virtual machines*, and leave VMs unassigned for now.  
@@ -61,6 +63,7 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 ---
 
 ## 🧩 Task 4 — Create a Health Probe
+
 1. Inside **myLoadBalancer → Settings → Health Probes → Add**  
 2. Configure:
    - **Name:** `myHealthProbe`  
@@ -75,6 +78,7 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 ---
 
 ## 🧩 Task 5 — Create a Load Balancer Rule
+
 1. **myLoadBalancer → Settings → Load Balancing Rules → Add**  
 2. Parameters:
    - **Name:** `HTTP-Rule`  
@@ -91,6 +95,7 @@ You will configure and test multiple Azure Load Balancer types, deploy backend V
 ---
 
 ## 🧩 Task 6 — Create Two Windows VMs
+
 1. Create `myVM1` and `myVM2` in an **Availability Set** under `myVNet`.  
 2. OS: Windows Server 2019 Datacenter  
 3. Disable public IP; RDP via Bastion if needed.  
@@ -170,6 +175,7 @@ Bastion connection window / IIS “myVM1” page in browser
 ---
 
 ### 🧩 Task 8 — Add VMs to Backend Pool
+
 Go to myLoadBalancer → Backend Pools → myBackendPool
 
 Select:
@@ -317,6 +323,7 @@ Screenshot:
 ![ILB Test](https://github.com/user-attachments/assets/3fbb69fb-ebaf-4a2c-b5cb-129ea152f2e2)
 
 ---
+## I Could not Uploade the ScreenShots for the Next 3 tasks as my subscription for Azure has limitations. All the Steps are mentioned for smooht execution.
 
 ## 🧩 Task 11 — Create a Zone-Redundant Load Balancer
 
@@ -353,15 +360,19 @@ Deploy a **Zone-Redundant Public Load Balancer** that maintains service availabi
    ```powershell
    Invoke-WebRequest http://<Zonal-LB-Public-IP>
 Output alternated between myVM1 and myVM2.
+```
 
-✅ Result
+✅ Result  
 Zone-redundant load balancer successfully distributed HTTP traffic across multiple zones, ensuring resiliency during zone failures.
 
-🧩 Task 12 — Create an Availability-Zone-Specific Load Balancer
-🎯 Objective
+---
+```
+## 🧩 Task 12 — Create an Availability-Zone-Specific Load Balancer
+
+### 🎯 Objective
 Deploy a zone-specific load balancer pinned to a single availability zone to compare with the redundant model.
 
-🧭 Steps
+### 🧭 Steps
 Create Load Balancer
 
 Name : myZoneSpecificLB | Zone : 1 | Type : Public | SKU : Standard
@@ -378,14 +389,17 @@ Add Load-Balancing Rule
 
 myZone1Rule → Frontend 80 → Backend 80 | Probe : myZone1Probe
 
-✅ Result
+✅ Result  
 Load Balancer created and operational only within Zone 1, providing single-zone high performance but limited resiliency.
 
-🧩 Task 13 — Test Load Balancer Zone Resiliency
-🎯 Objective
+---
+
+## 🧩 Task 13 — Test Load Balancer Zone Resiliency
+
+### 🎯 Objective
 Validate the difference in behavior between zone-redundant and zone-specific load balancers during zone failures.
 
-🧭 Steps
+### 🧭 Steps
 Test Zone-Redundant LB
 
 powershell
@@ -406,31 +420,39 @@ Load Balancer Type	Availability	Zone Scope	Use Case
 Zone-Redundant	High	Multi-Zone	Mission-critical apps
 Zone-Specific	Medium	Single Zone	Low-latency / cost-optimized apps
 
-✅ Result
+✅ Result  
 Zone-redundant LB maintained availability across zones; zone-specific LB failed when its zone became unavailable.
 
+---
+
 🧩 Task 14 — Clean Up Resources
-🎯 Objective
+
+### 🎯 Objective
 Delete all lab resources to avoid charges and keep the Azure subscription clean.
 
-🧭 Steps
+### 🧭 Steps
 Delete Resource Group
 
 bash
 Copy code
 az group delete --name LBresourcegroup --no-wait --yes
+
 Verify Deletion
 
 bash
 Copy code
 az group list --output table
+
 Confirmed LBresourcegroup removed.
 
-Optional Cleanup
+Optional Cleanup  
 Deleted remaining VNets, public IPs, disks, and NICs if present.
 
-✅ Result
+✅ Result  
 All resources from Lab 4 were removed successfully. Environment is ready for next lab deployment.
+
+---
+
 ## 🧠 Key Learnings
 
 Concept | Summary
