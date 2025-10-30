@@ -319,68 +319,118 @@ Screenshot:
 ---
 
 ## 🧩 Task 11 — Create a Zone-Redundant Load Balancer
-- Select SKU: Standard and Region supporting Availability Zones (e.g., East US 2).
-- Assign frontend IPs across zones 1–3.
-- Add backend pool and rules as in Task 5.
 
-📷 Screenshot: Zone redundancy diagram.
+### 🎯 Objective
+Deploy a **Zone-Redundant Public Load Balancer** that maintains service availability across multiple availability zones.
 
 ---
 
-## 🧩 Task 12 — Implement Azure Traffic Manager
-- Search Traffic Manager Profiles → Create
-- Configure:
-  - Name: myTrafficManager
-  - Routing Method: Performance (or Geographic)
-  - Endpoints: Add Public IPs of regional load balancers
-- Save and test routing by accessing the DNS name.
+### 🧭 Steps
 
-📷 Screenshot: Endpoint status = Online.
+1. **Create the Load Balancer**
+   - Name : `myZonalLB`
+   - Type : Public | SKU : Standard | Tier : Regional  
+   - Region : East Asia | Availability : Zone-redundant  
+   - Frontend IP Configuration :  
+     - Name : `myZonalFrontend`  
+     - Public IP : `myZonalPublicIP` (SKU = Standard | Tier = Regional | Zone = Redundant)
 
----
+2. **Create Backend Pool**
+   - Name : `myZonalBackendPool`
+   - Virtual Network : `myVnet`
+   - Added VMs : `myVM1` (Zone 1) and `myVM2` (Zone 2)
 
-## 🧩 Task 13 — Configure Azure Application Gateway
+3. **Create Health Probe**
+   - Name : `myZonalProbe` | Protocol : TCP | Port : 80 | Interval : 5 s | Threshold : 2
 
-Overview
+4. **Add Load-Balancing Rule**
+   - Name : `myZonalRule`
+   - Frontend IP : `myZonalFrontend`
+   - Backend Pool : `myZonalBackendPool`
+   - Port : 80 → 80 | Protocol : TCP | Probe : `myZonalProbe`
 
-Application Gateway is a Layer 7 load balancer for HTTP/S traffic with routing rules, listeners, and backend pools.
+5. **Validate**
+   ```powershell
+   Invoke-WebRequest http://<Zonal-LB-Public-IP>
+Output alternated between myVM1 and myVM2.
 
-Steps
+✅ Result
+Zone-redundant load balancer successfully distributed HTTP traffic across multiple zones, ensuring resiliency during zone failures.
 
-- Create → Networking → Application Gateway
-- Basics:
-  - Resource Group: myResourceGroupAG
-  - Name: myAppGateway
-  - SKU: Standard v2
-  - Virtual Network: Create new myVNet with:
-    - myAGSubnet (10.0.0.0/24) for gateway
-    - myBackendSubnet (10.0.1.0/24) for VMs
-- Frontends: Public IP → myAGPublicIPAddress
-- Backends: Add empty pool myBackendPool
-- Configuration: Add routing rule:
-  - Listener → myListener (Port 80)
-  - Backend pool → myBackendPool
-  - Backend setting → myBackendSetting (Port 80)
-- Create and wait for deployment.
-- Create two backend VMs (myVM, myVM2) in myBackendSubnet, install IIS.
-- Associate them to myBackendPool.
-- Test by browsing the Application Gateway’s Public IP.
+🧩 Task 12 — Create an Availability-Zone-Specific Load Balancer
+🎯 Objective
+Deploy a zone-specific load balancer pinned to a single availability zone to compare with the redundant model.
 
-📷 Screenshot: IIS responses from both backend VMs.
+🧭 Steps
+Create Load Balancer
 
----
+Name : myZoneSpecificLB | Zone : 1 | Type : Public | SKU : Standard
 
-## 🧩 Task 14 — Gateway Load Balancer (Concept)
-Integrates with Network Virtual Appliances (NVAs) for deep packet inspection.
+Frontend IP : myZone1Frontend with myZone1PublicIP (Zone 1 only)
 
-Uses “bump-in-the-wire” topology between a Frontend Load Balancer and an NVA backend.
+Backend Pool : myZone1BackendPool → myVM1
 
-Ensures high-availability & transparent traffic redirection.
+Create Health Probe
 
-📷 Optional diagram: Gateway LB architecture.
+myZone1Probe | Protocol : TCP | Port : 80 | Interval : 5 s | Threshold : 2
 
----
+Add Load-Balancing Rule
 
+myZone1Rule → Frontend 80 → Backend 80 | Probe : myZone1Probe
+
+✅ Result
+Load Balancer created and operational only within Zone 1, providing single-zone high performance but limited resiliency.
+
+🧩 Task 13 — Test Load Balancer Zone Resiliency
+🎯 Objective
+Validate the difference in behavior between zone-redundant and zone-specific load balancers during zone failures.
+
+🧭 Steps
+Test Zone-Redundant LB
+
+powershell
+Copy code
+Invoke-WebRequest http://<myZonalLB-Public-IP>
+Responses alternated between myVM1 and myVM2.
+Stopping myVM1 still returned myVM2 — service continued ✅
+
+Test Zone-Specific LB
+
+powershell
+Copy code
+Invoke-WebRequest http://<myZone1LB-Public-IP>
+When myVM1 was stopped, no response ❌
+
+🧠 Key Learning
+Load Balancer Type	Availability	Zone Scope	Use Case
+Zone-Redundant	High	Multi-Zone	Mission-critical apps
+Zone-Specific	Medium	Single Zone	Low-latency / cost-optimized apps
+
+✅ Result
+Zone-redundant LB maintained availability across zones; zone-specific LB failed when its zone became unavailable.
+
+🧩 Task 14 — Clean Up Resources
+🎯 Objective
+Delete all lab resources to avoid charges and keep the Azure subscription clean.
+
+🧭 Steps
+Delete Resource Group
+
+bash
+Copy code
+az group delete --name LBresourcegroup --no-wait --yes
+Verify Deletion
+
+bash
+Copy code
+az group list --output table
+Confirmed LBresourcegroup removed.
+
+Optional Cleanup
+Deleted remaining VNets, public IPs, disks, and NICs if present.
+
+✅ Result
+All resources from Lab 4 were removed successfully. Environment is ready for next lab deployment.
 ## 🧠 Key Learnings
 
 Concept | Summary
