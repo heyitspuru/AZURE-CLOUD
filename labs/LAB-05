@@ -1,1 +1,155 @@
+# LAB-05: Implementing Global Load Balancing using Azure Traffic Manager
 
+## 🌐 Overview
+This lab demonstrates how to implement global load balancing in Microsoft Azure using **Traffic Manager**.  
+It involves deploying two web applications across different regions, configuring Traffic Manager for DNS-based routing, and validating regional failover behavior.
+
+---
+
+## 🎯 Objectives
+- Deploy two Azure Web Apps in different regions
+- Configure Traffic Manager with Priority routing
+- Validate traffic failover and performance routing
+- Understand multi-region web hosting architecture
+
+---
+
+## 🧩 Prerequisites
+- Azure Subscription (Student or Free Tier)
+- Basic knowledge of Web Apps and Azure Networking
+- Azure CLI / Cloud Shell Access
+
+---
+
+## 🧠 Concept Summary
+Azure **Traffic Manager** provides DNS-based global load balancing.  
+It distributes user traffic across multiple endpoints based on the configured routing method (Priority, Performance, Weighted, or Geographic).  
+In this lab, the **Priority method** is used to achieve high availability through regional failover.
+
+---
+
+## 🧭 Step-by-Step Implementation
+
+### **Step 1: Create Resource Group**
+```bash
+az group create --name Lab5-AppService-RG --location eastasia
+
+Step 2: Create App Service Plans
+Create App Service Plans for each region:
+
+bash
+Copy code
+az appservice plan create \
+  --name AppServicePlanEA \
+  --resource-group Lab5-AppService-RG \
+  --location eastasia \
+  --sku B1
+
+az appservice plan create \
+  --name AppServicePlanSEA \
+  --resource-group Lab5-AppService-RG \
+  --location southeastasia \
+  --sku B1
+
+Step 3: Create Web Apps
+bash
+Copy code
+# East Asia App
+az webapp create \
+  --resource-group Lab5-AppService-RG \
+  --plan AppServicePlanEA \
+  --name myWebApp01
+
+# Southeast Asia App
+az webapp create \
+  --resource-group Lab5-AppService-RG \
+  --plan AppServicePlanSEA \
+  --name myWebAppSEA
+💡 Screenshot: 
+
+Step 4: Deploy Simple HTML Pages
+Use basic HTML content to distinguish both apps:
+
+bash
+Copy code
+# Web App 1
+echo "<h1>This is East Asia Web App #1</h1>" > index.html
+zip site1.zip index.html
+az webapp deploy \
+  --resource-group Lab5-AppService-RG \
+  --name myWebApp01 \
+  --src-path site1.zip \
+  --type zip
+
+# Web App 2
+echo "<h1>This is Southeast Asia Web App #2</h1>" > index.html
+zip site2.zip index.html
+az webapp deploy \
+  --resource-group Lab5-AppService-RG \
+  --name myWebAppSEA \
+  --src-path site2.zip \
+  --type zip
+✅ Verify both apps:
+
+arduino
+Copy code
+https://mywebapp01.azurewebsites.net
+https://mywebappsea.azurewebsites.net
+💡 Screenshot: Both sites showing different region banners
+
+Step 5: Create Traffic Manager Profile (Portal)
+Go to Traffic Manager Profiles → Create
+
+Name: MyTrafficProfile
+
+Routing Method: Priority
+
+DNS Name: rajtrafficlab5 (e.g., rajtrafficlab5.trafficmanager.net)
+
+Monitor Path: /
+
+Port: 80
+
+Protocol: HTTP
+
+Click Create
+
+💡 Screenshot: Traffic Manager profile overview with routing method
+
+Step 6: Add Endpoints
+Add both web apps:
+
+Open the Traffic Manager profile
+
+Go to Settings → Endpoints → + Add
+
+Type: Azure endpoint
+
+Target: myWebApp01
+
+Priority: 1
+
+Repeat for myWebAppSEA with Priority: 2
+
+💡 Screenshot: Endpoints table showing both apps with priorities
+
+Step 7: Verify and Test
+Copy the DNS name from overview:
+rajtrafficlab5.trafficmanager.net
+
+Open it in the browser → should load myWebApp01
+
+Stop the East Asia app (myWebApp01) in the portal
+
+Refresh Traffic Manager URL after ~30 seconds → should load myWebAppSEA
+
+Start the primary app again after validation
+
+💡 Screenshot: Failover behavior from East Asia → Southeast Asia
+
+⚙️ Troubleshooting & Notes
+Issue	Root Cause	Fix
+RequestDisallowedByAzure	Region restriction policy under Student subscription	Deploy both apps in allowed regions like East Asia & Southeast Asia
+GeomasterClientException	Both endpoints were in the same region	Use two distinct regions
+Runtime not supported	Region doesn’t support .NET runtime	Use Node (`NODE
+You do not have permission to view this directory	Missing index.html in /site/wwwroot/	Upload via Kudu or deploy a zipped site
