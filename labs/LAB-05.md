@@ -33,24 +33,26 @@ In this lab, the **Priority method** is used to achieve high availability throug
 ### **Step 1: Create Resource Group**
 ```bash
 az group create --name Lab5-AppService-RG --location eastasia
-
+```
 Step 2: Create App Service Plans
 Create App Service Plans for each region:
 
 bash
 Copy code
+```
 az appservice plan create \
   --name AppServicePlanEA \
   --resource-group Lab5-AppService-RG \
   --location eastasia \
   --sku B1
-
+```
+```
 az appservice plan create \
   --name AppServicePlanSEA \
   --resource-group Lab5-AppService-RG \
   --location southeastasia \
   --sku B1
-
+```
 Step 3: Create Web Apps
 bash
 Copy code
@@ -65,7 +67,8 @@ az webapp create \
   --resource-group Lab5-AppService-RG \
   --plan AppServicePlanSEA \
   --name myWebAppSEA
-💡 Screenshot: 
+💡 Screenshot: <img width="1918" height="907" alt="Screenshot 2025-10-31 004207" src="https://github.com/user-attachments/assets/43f01911-cf00-4467-8b38-b0bb61e4073d" />
+
 
 Step 4: Deploy Simple HTML Pages
 Use basic HTML content to distinguish both apps:
@@ -95,7 +98,12 @@ arduino
 Copy code
 https://mywebapp01.azurewebsites.net
 https://mywebappsea.azurewebsites.net
-💡 Screenshot: Both sites showing different region banners
+💡 Screenshot: <img width="1919" height="903" alt="Screenshot 2025-10-31 004229" src="https://github.com/user-attachments/assets/aeea47d7-898b-44dc-9e64-a10dd6ad9d18" />
+
+<img width="1919" height="969" alt="Screenshot 2025-10-31 173112" src="https://github.com/user-attachments/assets/dd39ecc6-3dbc-4346-b46c-42bc556ef696" />
+
+<img width="1917" height="811" alt="Screenshot 2025-10-31 182853" src="https://github.com/user-attachments/assets/88ab3ac7-ddbb-4f96-a276-cf03ab58a809" />
+
 
 Step 5: Create Traffic Manager Profile (Portal)
 Go to Traffic Manager Profiles → Create
@@ -114,7 +122,8 @@ Protocol: HTTP
 
 Click Create
 
-💡 Screenshot: Traffic Manager profile overview with routing method
+💡 Screenshot: <img width="1919" height="827" alt="Screenshot 2025-10-31 173459" src="https://github.com/user-attachments/assets/c6945455-3f8b-4d48-b7db-7d788285b99d" />
+
 
 Step 6: Add Endpoints
 Add both web apps:
@@ -131,7 +140,7 @@ Priority: 1
 
 Repeat for myWebAppSEA with Priority: 2
 
-💡 Screenshot: Endpoints table showing both apps with priorities
+💡 Screenshot: <img width="1919" height="750" alt="Screenshot 2025-10-31 182440" src="https://github.com/user-attachments/assets/852476b6-907c-4507-8b39-387a49998de0" />
 
 Step 7: Verify and Test
 Copy the DNS name from overview:
@@ -145,7 +154,6 @@ Refresh Traffic Manager URL after ~30 seconds → should load myWebAppSEA
 
 Start the primary app again after validation
 
-💡 Screenshot: Failover behavior from East Asia → Southeast Asia
 
 ⚙️ Troubleshooting & Notes
 Issue	Root Cause	Fix
